@@ -80,18 +80,10 @@
 	
 	# Functions to export from this module
 	FunctionsToExport	   = @(
-		'New-GraphMailAttachement',
-		'New-GraphMailRecipient',
-		'New-GraphMailBody',
 		'Send-GraphMailMessage',
-		'Get-FileMimeType',
 		'Get-MGMailFolderFromPath',
-		'Get-MailFolderMessages',
-		'Convert-HTMLToPlainText',
-		'ConvertFrom-MGMailMessage',
-		'Set-PSObjectDefaultProperties',
-		'Set-LastMailCheckTime',
-		'Get-LastMailCheckTime'
+		'Get-MailFolderMessages'
+
 	) #For performance, list functions explicitly
 	
 	# Cmdlets to export from this module
