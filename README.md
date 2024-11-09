@@ -1,11 +1,25 @@
 
 # Microsoft Graph PowerShell Mail Module
-This PowerShell module interacts with the Microsoft Graph API to manage email. With this module, users can retrieve emails, navigate through mail folders, and send messages directly from PowerShell. It is designed to streamline common email tasks for system administrators.
+I wrote this module to make interacting with MSGraph mail APIS easier.
 
 ## Available Functions
 
+### 2. `Get-MGMailFolderFromPath`
+Allows you to get a mailfolder like you would file paths using your userid as the root "directory"
+
+**Parameters:**
+- `-Path`: Mail folder path, e.g., `"user@domain.com\Inbox\My Folder"`.
+- `-ShowChildren`: List child folders if present for better visibility 
+
+**Example:**
+```powershell
+Get-MGMailFolderFromPath -Path "user@domain.com\Sent Items"
+```
+
 ### 1. `Get-MailFolderMessages`
-Fetches messages from a specified mail folder.
+You can pipe the output of `Get-MGMailFolderFromPath` into this to get messages inside that folder.
+The function will save a golbal machine variable named after the Folder ID with a date the last time you checked the folder
+allowign you to do quick delta checks for new messages. You can have this skipped with the `-NoSetTime` parameter.
 
 **Parameters:**
 - `-Id`: The folder ID.
@@ -16,22 +30,7 @@ Fetches messages from a specified mail folder.
 
 **Example:**
 ```powershell
-# Retrieve all messages from the "Inbox" folder of a specific user
-$inboxFolder = Get-MGMailFolderFromPath -Path "user@domain.com\Inbox"
-Get-MailFolderMessages -Id $inboxFolder.Id -UserID $inboxFolder.UserID
-```
-
-### 2. `Get-MGMailFolderFromPath`
-Locates a user's mail folder by a specified path.
-
-**Parameters:**
-- `-Path`: Mail folder path, e.g., `"user@domain.com\Inbox"`.
-- `-ShowChildren`: List child folders if present.
-
-**Example:**
-```powershell
-# Retrieve a reference to the "Sent Items" folder
-$sentFolder = Get-MGMailFolderFromPath -Path "user@domain.com\Sent Items"
+Get-MGMailFolderFromPath -Path "user@domain.com\Inbox" | Get-MailFolderMessages 
 ```
 
 ### 3. `Send-GraphMailMessage`
